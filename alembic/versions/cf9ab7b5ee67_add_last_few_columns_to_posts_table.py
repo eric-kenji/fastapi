@@ -1,0 +1,28 @@
+"""add last few columns to posts table
+
+Revision ID: cf9ab7b5ee67
+Revises: 7bbf94f1211d
+Create Date: 2022-05-04 19:55:58.149457
+
+"""
+from alembic import op
+import sqlalchemy as sa
+
+
+# revision identifiers, used by Alembic.
+revision = 'cf9ab7b5ee67'
+down_revision = '7bbf94f1211d'
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    op.add_column('posts',sa.Column('published',sa.Boolean(),nullable=False,server_default='TRUE'),)
+    op.add_column('posts',sa.Column('created_at', sa.TIMESTAMP(timezone=True), nullable=False, server_default=sa.text('NOW()')),)
+    pass
+
+
+def downgrade():
+    op.drop_column('posts','published')
+    op.drop_column('posts','created_at')
+    pass
